@@ -4,21 +4,9 @@ use warnings;
 use Cwd;
 use constant DataAPIVersion => 'v1';
 
-use MT::Log;
-use Data::Dumper;
-sub doLog {
-    my ($msg, $code) = @_;
-    return unless defined($msg);
-    my $log = MT::Log->new;
-    $log->message($msg);
-    $log->metadata($code);
-    $log->save or die $log->errstr;
-}
-
 sub clear_data_api_cache {
     my ($cb, $app, $obj, $orig_obj) = @_;
     my $plugin = MT->component('DataAPIPHPCache');
-    &doLog(Dumper($cb->{'method'}));
     my $method = $cb->{'method'};
     my $method_object = $method;
     my $method_type = $method;
@@ -39,8 +27,6 @@ sub clear_data_api_cache {
         # ping => 'trackbacks',
     };
     my $object_name = $objects->{$method_object};
-    &doLog($object_name);
-    &doLog(Dumper($obj));
 
     my $site_id = ($app->blog) ? $app->blog->id : 0;
     my $object_id = ($obj->id) ? $obj->id : 0;
@@ -74,7 +60,6 @@ sub clear_data_api_cache {
             }
             elsif ($object_name eq 'comments') {
                 push(@clear_cache_dir, File::Spec->catdir($cache_dir_path, $site_id, $object_name, $object_id));
-                &doLog('$obj->entry_id', Dumper($obj->entry_id));
                 if ($obj->entry_id) {
                     push(@clear_cache_dir, File::Spec->catdir($cache_dir_path, $site_id, 'entries', $obj->entry_id, $object_name));
                 }
@@ -86,7 +71,6 @@ sub clear_data_api_cache {
         my $fmgr = MT::FileMgr->new('Local');
         require File::Find;
         foreach my $dir (@clear_cache_dir) {
-            &doLog(Dumper($dir));
             File::Find::find(
                 {
                     wanted => sub {
@@ -101,8 +85,6 @@ sub clear_data_api_cache {
     }
     if (defined(@clear_cache_file_dir)) {
         foreach my $dir (@clear_cache_file_dir) {
-            &doLog(Dumper($dir));
-            &doLog(Dumper(-d $dir));
             if (-d $dir) {
                 chdir($dir) or die $!;
                 opendir(DIR, $dir);
@@ -111,8 +93,6 @@ sub clear_data_api_cache {
                     unlink($file);
                 }
                 closedir(DIR);
-                &doLog('Deleted files!');
-                &doLog(Dumper(@file_list));
             }
         }
     }
@@ -122,7 +102,6 @@ sub clear_data_api_cache {
 
 sub post_delete_objects {
     my ($cb, $app, $obj) = @_;
-    &doLog(Dumper($cb->{'method'}));
 }
 
 1;
