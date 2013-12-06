@@ -1,5 +1,5 @@
 <?php
-  $include_endpoints = array('entries', 'categories', 'comments', 'trackbacks');
+  $include_endpoints = array('entries', 'categories', 'comments');
   $query_string = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
   $path_info = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
   $cache_disabled = true;
