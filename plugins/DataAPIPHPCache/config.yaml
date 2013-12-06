@@ -1,0 +1,33 @@
+# Data API PHP Cache
+#
+# Release 0.01 (2013-12-4)
+#
+# Copyright (c) bit part LLC. / Powered by mt-plug.in
+name: Data API PHP Cache
+id: DataAPIPHPCache
+key: dataapiphpcache
+version: 0.01
+author_name: <__trans phrase="bit part LLC">
+author_link: http://bit-part.net/
+description: <__trans phrase="Save the response of Data API.">
+plugin_link: https://github.com/bit-part/mt-plugin-DataAPIPHPCache
+doc_link: https://github.com/bit-part/mt-plugin-DataAPIPHPCache/blob/master/README.md
+l10n_class: DataAPIPHPCache::L10N
+system_config_template: system_config.tmpl
+settings:
+    data_api_php_cache_dir:
+        scope: system
+        default: data-api-php-cache
+callbacks:
+    MT::App::CMS::cms_post_save.website: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_save.blog: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_save.entry: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_save.category: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::Comment::post_save: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_save.ping: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_delete.website: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_delete.blog: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_delete.entry: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_delete.category: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_delete.comment: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
+    MT::App::CMS::cms_post_delete.ping: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache

@@ -1,4 +1,5 @@
 <?php
+  define('DataAPICacheDirName', 'data-api-php-cache')
   $include_endpoints = array('entries', 'categories', 'comments');
   $query_string = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
   $path_info = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
@@ -23,7 +24,7 @@
   }
   $file_name = ($query_string) ? '/' . md5($query_string) . '.json' : '/index.json';
   $data_api_script = '<mt:CGIPath><mt:Var name="config.DataAPIScript">';
-  $data_api_cache_path = '<mt:If name="config.SupportDirectoryPath"><mt:Var name="config.SupportDirectoryPath"><mt:Else><mt:Var name="config.StaticFilePath">/support</mt:If>/data-api-php-cache';
+  $data_api_cache_path = '<mt:If name="config.SupportDirectoryPath"><mt:Var name="config.SupportDirectoryPath"><mt:Else><mt:Var name="config.StaticFilePath">/support</mt:If>/' . DataAPICacheDirName;
   $cache_write = false;
   $cache_file = $data_api_cache_path . $path_info . $file_name;
   $cache_dir = dirname($cache_file);
