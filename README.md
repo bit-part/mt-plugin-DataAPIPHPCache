@@ -1,4 +1,4 @@
-mt-plugin-DataAPIPHPCache
+Data API PHP Cache
 =========================
 
 ## Overview
