@@ -24,10 +24,8 @@ callbacks:
     MT::App::CMS::cms_post_save.entry: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
     MT::App::CMS::cms_post_save.category: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
     MT::Comment::post_save: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
-    MT::App::CMS::cms_post_save.ping: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
     MT::App::CMS::cms_post_delete.website: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
     MT::App::CMS::cms_post_delete.blog: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
     MT::App::CMS::cms_post_delete.entry: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
     MT::App::CMS::cms_post_delete.category: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
     MT::App::CMS::cms_post_delete.comment: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
-    MT::App::CMS::cms_post_delete.ping: $dataapiphpcache::DataAPIPHPCache::Callbacks::clear_data_api_cache
