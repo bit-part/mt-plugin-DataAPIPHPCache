@@ -3,6 +3,11 @@
   $include_endpoints = array('entries', 'categories', 'comments');
   $query_string = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
   $path_info = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+  $headers = getallheaders();
+  $post_header = "Content-Type: application/x-www-form-urlencoded";
+  if (!empty($headers{'X-MT-Authorization'}) && preg_match('/^MTAuth accessToken/', $headers{'X-MT-Authorization'})) {
+    $post_header .= "\r\n". "X-MT-Authorization:" . $headers{'X-MT-Authorization'};
+  }
   $cache_disabled = true;
   if ($path_info) {
     foreach ($include_endpoints as $value) {
@@ -32,7 +37,15 @@
     readfile($cache_file);
   }
   else {
-    $response = curl_get_contents($data_api_script . $path_info . '?' . $query_string);
+    $url = $data_api_script . $path_info . '?' . $query_string;
+    $context = stream_context_create(array(
+      'http' => array(
+        'method' => 'GET',
+        'header' => $post_header,
+        'ignore_errors' => true,
+      )
+    ));
+    $response = @file_get_contents($url, false, $context);
     $response_json = json_decode($response);
     if (isset($response_json)) {
       $response_error = isset($response_json->{'error'}) ? $response_json->{'error'} : NULL;
@@ -44,16 +57,6 @@
       }
     }
     echo($response);
-  }
-
-  function curl_get_contents($url) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    return $data;
   }
   exit();
 ?>
